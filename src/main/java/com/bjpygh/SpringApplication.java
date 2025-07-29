@@ -38,13 +38,14 @@ public class SpringApplication {
     // mapper文件
     private static final String MAPPERS = "mappers";
 
-
     // 表名
-    private static final String[] TABLES_TO_INCLUDE = {"graduation_project", "graduation_project_category", "question", "question_bank", "question_category", "question_practice_record", "textbook", "textbook_answer", "textbook_category", "textbook_feedback", "textbook_user_requirement", "user_resource_collection"};
+    // private static final String[] TABLES_TO_INCLUDE = {"graduation_project", "graduation_project_category", "question", "question_bank", "question_category", "question_practice_record", "textbook", "textbook_answer", "textbook_category", "textbook_feedback", "textbook_user_requirement", "user_resource_collection"};
 
     public static void main(String[] args) {
         try {
             System.out.println("开始生成代码...");
+            // 统计生成代码耗时
+            long start = System.currentTimeMillis();
 
             FastAutoGenerator.create(DB_URL, DB_USERNAME, DB_PASSWORD)
                     .globalConfig(builder -> {
@@ -71,7 +72,8 @@ public class SpringApplication {
                                 .pathInfo(Collections.singletonMap(OutputFile.xml, MAPPER_XML_PATH)); // 设置mapperXml生成路径
                     })
                     .strategyConfig(builder ->
-                            builder.addInclude(TABLES_TO_INCLUDE) // 设置需要生成的表名
+                            // builder.addInclude(TABLES_TO_INCLUDE) // 设置需要生成的表名
+                            builder.addInclude(Collections.emptyList()) // 若为空集合/数组, 则默认生成全部表对应层的代码
                                     .addTablePrefix("t_", "c_") // 设置过滤表前缀
                                     .entityBuilder() // 启用实体类builder
                                     .enableLombok() // 启用Lombok
@@ -83,6 +85,7 @@ public class SpringApplication {
                     .execute();
 
             System.out.println("代码生成完成！");
+            System.out.println("生成总耗时: " + (System.currentTimeMillis() - start));
         } catch (Exception e) {
             System.err.println("生成代码时发生错误: " + e.getMessage());
             e.printStackTrace();
