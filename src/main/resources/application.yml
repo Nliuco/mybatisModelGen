@@ -1,17 +1,17 @@
 mybatis-plus:
   datasource:
-    url: jdbc:mysql://test.bjpygh.com/pygh
+    url: jdbc:mysql://test.bjpygh.com/example_db
     username: root
     password: P@gh202o
   global-config:
     author: wengjk
     swagger: true
-    output-dir: /Users/piaoyangguohai/IdeaProjects/mybatisModelGen/src/main/java/
+    output-dir: /Users/wengjk/project/IdeaProjects/mybatisModelGen/src/main/java/
   package-config:
     parent: com.bjpygh
-    module-name: demandApply
-    mapper-xml-dir: /Users/piaoyangguohai/IdeaProjects/mybatisModelGen/src/main/resources/mapper
+    module-name: example_module_name
+    mapper-xml-dir: /Users/wengjk/project/IdeaProjects/mybatisModelGen/src/main/resources/mapper
   strategy-config:
     include-tables:
-      - da_offline_invitation
-      - da_offline_official_people
+      - example_table_name1
+      - example_table_name2
