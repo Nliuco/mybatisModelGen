@@ -9,10 +9,9 @@ import java.sql.Types;
 import java.util.Collections;
 
 /**
- * @author wengjk
- * @date 2024年09月20日
- * @className SpringApplication
- * @describe 基于mybatis模版引擎生成代码
+ * @author: wengjk
+ * @created: 2024年09月20日
+ * @describe: 基于mybatis模版引擎生成代码
  */
 public class SpringApplication {
 
@@ -49,7 +48,8 @@ public class SpringApplication {
 
             FastAutoGenerator.create(DB_URL, DB_USERNAME, DB_PASSWORD)
                     .globalConfig(builder -> {
-                        builder.author(AUTHOR) // 设置作者
+                        // 设置作者
+                        builder.author(AUTHOR)
                                 // 开启 swagger 模式
                                 // .enableSwagger()
                                 .outputDir(OUTPUT_DIR);
@@ -57,35 +57,47 @@ public class SpringApplication {
                     .dataSourceConfig(builder -> builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
                         int typeCode = metaInfo.getJdbcType().TYPE_CODE;
                         if (typeCode == Types.SMALLINT) {
-                            return DbColumnType.INTEGER; // 自定义类型转换
+                            // 自定义类型转换
+                            return DbColumnType.INTEGER;
                         }
                         return typeRegistry.getColumnType(metaInfo);
                     }))
                     .packageConfig(builder -> {
-                        builder.parent(PARENT_PACKAGE) // 设置父包名
-                                .moduleName(MODULE_NAME) // 设置父包模块名
+                        // 设置父包名
+                        builder.parent(PARENT_PACKAGE)
+                                // 设置父包模块名
+                                .moduleName(MODULE_NAME)
                                 .entity(MODEL_PO)
                                 .mapper(MAPPER)
                                 .service(SERVICE)
                                 .serviceImpl(SERVICE_IMPL)
                                 .xml(MAPPERS)
-                                .pathInfo(Collections.singletonMap(OutputFile.xml, MAPPER_XML_PATH)); // 设置mapperXml生成路径
+                                // 设置mapperXml生成路径
+                                .pathInfo(Collections.singletonMap(OutputFile.xml, MAPPER_XML_PATH));
                     })
                     .strategyConfig(builder ->
                             // builder.addInclude(TABLES_TO_INCLUDE) // 设置需要生成的表名
-                            builder.addInclude(Collections.emptyList()) // 若为空集合/数组, 则默认生成全部表对应层的代码
-                                    .addTablePrefix("t_", "c_") // 设置过滤表前缀
-                                    .entityBuilder() // 启用实体类builder
-                                    .enableLombok() // 启用Lombok
-                                    // .enableTableFieldAnnotation() // 启用字段注解
-                                    .controllerBuilder() // 启用控制器builder
-                                    .enableRestStyle() // 启用REST风格
+                            // 若为空集合/数组, 则默认生成全部表对应层的代码
+                            builder.addInclude(Collections.emptyList())
+                                    // 设置过滤表前缀
+                                    .addTablePrefix("t_", "c_")
+                                    // 启用实体类builder
+                                    .entityBuilder()
+                                    // 启用Lombok
+                                    .enableLombok()
+                                    // 启用字段注解
+                                    // .enableTableFieldAnnotation()
+                                    // 启用控制器builder
+                                    .controllerBuilder()
+                                    // 启用REST风格
+                                    .enableRestStyle()
                     )
-                    .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板
+                    // 使用Freemarker引擎模板
+                    .templateEngine(new FreemarkerTemplateEngine())
                     .execute();
 
             System.out.println("代码生成完成！");
-            System.out.println("生成总耗时: " + (System.currentTimeMillis() - start));
+            System.out.println("生成总耗时(毫秒): " + (System.currentTimeMillis() - start) + "ms");
         } catch (Exception e) {
             System.err.println("生成代码时发生错误: " + e.getMessage());
             e.printStackTrace();
