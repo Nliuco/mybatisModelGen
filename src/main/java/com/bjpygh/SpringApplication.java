@@ -15,9 +15,9 @@ import java.util.Collections;
  */
 public class SpringApplication {
 
-    private static final String DB_URL = "jdbc:mysql://test.bjpygh.com/course";
+    private static final String DB_URL = "jdbc:mysql://47.93.8.226:3306/dxt";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "P@gh202o";
+    private static final String DB_PASSWORD = "Bjpygh@2025";
     private static final String AUTHOR = "wengjk";
     private static final String OUTPUT_DIR = "/Users/wengjk/project/IdeaProjects/mybatisModelGen/src/main/java/";
     private static final String MAPPER_XML_PATH = "/Users/wengjk/project/IdeaProjects/mybatisModelGen/src/main/resources/mapper";
@@ -25,7 +25,7 @@ public class SpringApplication {
     // 父包名
     private static final String PARENT_PACKAGE = "com.bjpygh";
     // 模块名
-    private static final String MODULE_NAME = "course";
+    private static final String MODULE_NAME = "dxt";
     // 实体类包名
     private static final String MODEL_PO = "model.po";
     // Mapper接口包名
@@ -38,7 +38,7 @@ public class SpringApplication {
     private static final String MAPPERS = "mappers";
 
     // 表名
-    // private static final String[] TABLES_TO_INCLUDE = {"graduation_project", "graduation_project_category", "question", "question_bank", "question_category", "question_practice_record", "textbook", "textbook_answer", "textbook_category", "textbook_feedback", "textbook_user_requirement", "user_resource_collection"};
+    private static final String[] TABLES_TO_INCLUDE = {"common_banner", "common_config", "common_config_text", "course", "course_category", "course_media", "user", "user_browsing", "user_collect", "user_course_media_record", "user_details", "base_school", "base_major"};
 
     public static void main(String[] args) {
         try {
@@ -76,9 +76,10 @@ public class SpringApplication {
                                 .pathInfo(Collections.singletonMap(OutputFile.xml, MAPPER_XML_PATH));
                     })
                     .strategyConfig(builder ->
-                            // builder.addInclude(TABLES_TO_INCLUDE) // 设置需要生成的表名
+                                    // 设置需要生成的表名
+                            builder.addInclude(TABLES_TO_INCLUDE)
                             // 若为空集合/数组, 则默认生成全部表对应层的代码
-                            builder.addInclude(Collections.emptyList())
+                            // builder.addInclude(Collections.emptyList())
                                     // 设置过滤表前缀
                                     .addTablePrefix("t_", "c_")
                                     // 启用实体类builder
